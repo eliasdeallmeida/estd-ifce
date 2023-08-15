@@ -6,5 +6,4 @@ try:
     number = int(input('>>> Informe um número: '))
     print(f'O número {number} tem {countDigits(number)} dígitos')
 except Exception as exception:
-    print('<ERRO>: O número deve ser inteiro.')
     print(exception)

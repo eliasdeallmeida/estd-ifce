@@ -11,5 +11,4 @@ try:
     print(f'{"PASSO A PASSO":^25}')
     tower_of_hanoi(disks)
 except Exception as exception:
-    print('<ERRO>: O número deve ser inteiro.')
     print(exception)
