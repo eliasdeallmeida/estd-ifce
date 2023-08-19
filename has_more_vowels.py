@@ -1,11 +1,18 @@
-def hasMoreVowels(text, vowels, counter = 0, index = 0):
+import unicodedata
+
+def removeAccents(str):
+    nfkd_form = unicodedata.normalize("NFKD", str)
+    return "".join([c for c in nfkd_form if not unicodedata.combining(c)])
+
+
+def hasMoreVowels(text, counter = 0, index = 0):
+    text = removeAccents(text)
     if index == len(text):
-        return True if counter > index / 2 else False
-    if text[index] in vowels:
-        return hasMoreVowels(text, vowels, counter + 1, index + 1)
-    return hasMoreVowels(text, vowels, counter, index + 1)
+        return counter > index / 2
+    if text[index].lower() in 'aeiou':
+        return hasMoreVowels(text, counter + 1, index + 1)
+    return hasMoreVowels(text, counter, index + 1)
 
 
-vowels = 'aeiouAEIOUáéíóúÁÉÍÓÚãõÃÕàèìòùÀÈÌÒÙäëïöüÄËÏÖÜ'
 text = str(input('>>> Informe um texto qualquer: '))
-print(f'O texto "{text}"{"" if hasMoreVowels(text, vowels) else " não"} tem mais vogais que consoantes.')
+print(f'O texto "{text}"{"" if hasMoreVowels(text) else " não"} tem mais vogais que consoantes.')
