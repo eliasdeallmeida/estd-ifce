@@ -26,14 +26,14 @@ class LinkedList():
             self.head = newNode
         else:
             current = self.head
-            while current.next != None:
+            while current.next:
                 current = current.next
             current.next = newNode
         self.length += 1
     
     def insertAtGivenPosition(self, position, data):
         if position < 0 or position > self.length:
-            return None
+            return
         if position == 0:
             self.insertAtBeginning(data)
             return
@@ -43,15 +43,15 @@ class LinkedList():
         newNode = Node(data)
         count = 1
         current = self.head
-        while count < position - 1:
-            count += 1
+        while count != position:
             current = current.next
+            count += 1
         newNode.next = current.next
         current.next = newNode
-        self.lenght += 1
+        self.length += 1
 
     def removeAtBeginning(self):
-        if self.length != 0:
+        if self.length:
             self.head = self.head.next
             self.length -= 1
     
@@ -59,7 +59,7 @@ class LinkedList():
         if self.length == 0:
             return
         current = self.head
-        while current.next != None:
+        while current.next:
             previous = current
             current = current.next
         previous.next = None
@@ -84,28 +84,23 @@ class LinkedList():
         self.length -= 1
 
     def removeElementsByValue(self, value):
-        if self.length == 1 and self.head == value:
-            self.head = None
         current = self.head
-        count = 0
-        while current != None:
+        previous = None
+        while current:
             if current.data == value:
-                if current.next != None:
-                    if count == 0:
-                        self.head = current.next
-                    else:
-                        previous.next = current.next
+                if previous == None:
+                    self.head = current.next
                 else:
-                    previous.next = None
+                    previous.next = current.next
                 self.length -= 1
-            count += 1
-            previous = current
+            else:
+                previous = current
             current = current.next
 
     def printElements(self):
         position = 0
         current = self.head
-        while current != None:
+        while current:
             print(f'{position} - {current.data}')
             position += 1
             current = current.next
