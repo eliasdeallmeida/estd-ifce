@@ -58,3 +58,15 @@ class Stack():
             elif self.top == None or self.pop() != tag.replace('/', ''):
                 return False
         return self.top == None
+    
+    def isPalindrome(self, string):
+        half = len(string) // 2
+        for i in range(len(string)):
+            if i < half:
+                self.push(string[i])
+            elif len(string) % 2 and i == half:
+                continue
+            elif self.pop() != string[i]:
+                return False
+        return self.top == None
+
