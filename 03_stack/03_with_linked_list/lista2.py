@@ -260,11 +260,15 @@ def avaliarExpressao(expressao):
         elif char == '/':
             op2 = pilha.pop()
             op1 = pilha.pop()
+            if op1[0] != '(' and op1[-1] != ')' and len(op1) > 1:
+                op1 = '(' + op1 + ')'
+            if op2[0] != '(' and op2[-1] != ')' and len(op2) > 1:
+                op2 = '(' + op2 + ')'
             temp = op1 + ' / ' + op2
             if i + 1 < len(expressao) and expressao[i + 1] == '*':
                 temp = '(' + temp + ')'
             pilha.push(temp)
             print(f'LD {op1}')
-            print(f'ML {op2}')
+            print(f'DV {op2}')
             print(f'ST {temp}')
     print(f'Operação em notação infixa: {pilha.peek()}')
