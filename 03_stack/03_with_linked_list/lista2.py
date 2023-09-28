@@ -219,3 +219,52 @@ class StackQ7():
             return self.t1 + 1
         elif p == 2:
             return self.n - self.t2
+
+
+# Q8
+def avaliarExpressao(expressao):
+    pilha = Stack()
+    for i, char in enumerate(expressao):
+        if char.isalpha():
+            pilha.push(char)
+        elif char == '+':
+            op2 = pilha.pop()
+            op1 = pilha.pop()
+            temp = op1 + ' + ' + op2
+            if i + 1 < len(expressao) and expressao[i + 1] in '*/':
+                temp = '(' + temp + ')'
+            pilha.push(temp)
+            print(f'LD {op1}')
+            print(f'AD {op2}')
+            print(f'ST {temp}')
+        elif char == '-':
+            op2 = pilha.pop()
+            op1 = pilha.pop()
+            temp = op1 + ' - ' + op2
+            if i + 1 < len(expressao) and expressao[i + 1] in '*/':
+                temp = '(' + temp + ')'
+            pilha.push(temp)
+            print(f'LD {op1}')
+            print(f'SB {op2}')
+            print(f'ST {temp}')
+        elif char == '*':
+            op2 = pilha.pop()
+            op1 = pilha.pop()
+            temp = op1 + ' * ' + op2
+            if i + 1 < len(expressao) and expressao[i + 1] == '/':
+                temp = '(' + temp + ')'
+            pilha.push(temp)
+            print(f'LD {op1}')
+            print(f'ML {op2}')
+            print(f'ST {temp}')
+        elif char == '/':
+            op2 = pilha.pop()
+            op1 = pilha.pop()
+            temp = op1 + ' / ' + op2
+            if i + 1 < len(expressao) and expressao[i + 1] == '*':
+                temp = '(' + temp + ')'
+            pilha.push(temp)
+            print(f'LD {op1}')
+            print(f'ML {op2}')
+            print(f'ST {temp}')
+    print(f'Operação em notação infixa: {pilha.peek()}')
