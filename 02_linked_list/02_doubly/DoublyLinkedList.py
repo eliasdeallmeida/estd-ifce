@@ -1,5 +1,6 @@
 from Node import Node
 
+
 class DoublyLinkedList():
     def __init__(self):
         self.head = None
