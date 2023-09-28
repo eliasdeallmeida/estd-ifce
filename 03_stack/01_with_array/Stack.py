@@ -2,14 +2,14 @@ class Stack():
     def __init__(self, capacity = 1):
         self.top = 1
         self.capacity = capacity
-        self.a = [None] * capacity
+        self.array = [None] * capacity
     
     def push(self, data):
         if self.capacity == self.top + 1:
             print('Stack Overflow')
             return
         self.top += 1
-        self.a[self.top] = data
+        self.array[self.top] = data
     
     def pop(self):
         if self.top == -1:
@@ -23,7 +23,7 @@ class Stack():
         if self.top == -1:
             print('Stack Overflow')
             return
-        return self.a[self.top]
+        return self.array[self.top]
     
     def isEmpty(self):
         return self.top == -1
