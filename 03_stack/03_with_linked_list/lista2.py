@@ -61,107 +61,25 @@ class StackQ6():
         self.a[0] = 0
 
 
-# Q7 V1
-class P1():
-    def __init__(self, a, n):
-        self.t1 = -1
-        self.limit = n // 2
-        self.a = a
-    
-    def push(self, data):
-        if self.t1 + 1 == self.limit:
-            return
-        self.t1 += 1
-        self.a[self.t1] = data
-    
-    def pop(self):
-        if self.t1 == -1:
-            return
-        data = self.a[self.t1]
-        self.a[self.t1] = None
-        self.t1 -= 1
-        return data
-    
-    def peek(self):
-        return self.a[self.t1]
-    
-    def len(self):
-        count = 0
-        while count < self.t1 + 1:
-            count += 1
-        return count
-    
-    def isEmpty(self):
-        return self.t1 == -1
-    
-    def isFull(self):
-        return self.t1 + 1 == self.limit
-    
-    def empty(self):
-        for i in range(self.t1, -1, -1):
-            self.a[i] = None
-        self.t1 = -1
-
-
-class P2():
-    def __init__(self, a, n):
-        self.t2 = n
-        self.limit = n // 2
-        self.a = a
-    
-    def push(self, data):
-        if self.t2 == self.limit:
-            return
-        self.t2 -= 1
-        self.a[self.t2] = data
-    
-    def pop(self):
-        if self.t2 == len(self.a):
-            return
-        data = self.a[self.t2]
-        self.a[self.t2] = None
-        self.t2 += 1
-        return data
-    
-    def peek(self):
-        return self.a[self.t2]
-    
-    def len(self):
-        count = 0
-        while count < self.t2:
-            count += 1
-        return len(self.a) - count
-    
-    def isEmpty(self):
-        return self.t2 == len(self.a)
-    
-    def isFull(self):
-        return self.t2 == len(self.a) // 2
-    
-    def empty(self):
-        length = len(self.a)
-        for i in range(self.t2, length):
-            self.a[i] = None
-        self.t2 = length
-
-
-# Q7 V2
+# Q7
 class StackQ7():
     def __init__(self, n):
         self.t1 = -1
         self.t2 = n
-        self.limit = n // 2
         self.a = [None] * n
         self.n = n
     
+    def __str__(self):
+        return str(self.a)
+    
     def push(self, p, data):
         if p == 1:
-            if self.t1 + 1 == self.limit:
+            if self.t1 + 1 == self.t2:
                 return
             self.t1 += 1
             self.a[self.t1] = data
         elif p == 2:
-            if self.t2 == self.limit:
+            if self.t2 - 1 == self.t1:
                 return
             self.t2 -= 1
             self.a[self.t2] = data
@@ -198,11 +116,8 @@ class StackQ7():
         elif p == 2:
             return self.t2 == self.n
     
-    def isFull(self, p):
-        if p == 1:
-            return self.t1 == self.limit - 1
-        elif p == 2:
-            return self.t2 == self.limit
+    def isFull(self):
+        return self.t1 + 1 == self.t2
     
     def empty(self, p):
         if p == 1:
@@ -224,51 +139,23 @@ class StackQ7():
 # Q8
 def avaliarExpressao(expressao):
     pilha = Stack()
-    for i, char in enumerate(expressao):
+    count = 0
+    for char in expressao:
         if char.isalpha():
             pilha.push(char)
-        elif char == '+':
+        else:
+            if char == '+':
+                op = 'AD '
+            elif char == '-':
+                op = 'SB '
+            elif char == '*':
+                op = 'ML '
+            elif char == '/':
+                op = 'DV '
+            count += 1
             op2 = pilha.pop()
             op1 = pilha.pop()
-            temp = op1 + ' + ' + op2
-            if i + 1 < len(expressao) and expressao[i + 1] in '*/':
-                temp = '(' + temp + ')'
-            pilha.push(temp)
-            print(f'LD {op1}')
-            print(f'AD {op2}')
-            print(f'ST {temp}')
-        elif char == '-':
-            op2 = pilha.pop()
-            op1 = pilha.pop()
-            temp = op1 + ' - ' + op2
-            if i + 1 < len(expressao) and expressao[i + 1] in '*/':
-                temp = '(' + temp + ')'
-            pilha.push(temp)
-            print(f'LD {op1}')
-            print(f'SB {op2}')
-            print(f'ST {temp}')
-        elif char == '*':
-            op2 = pilha.pop()
-            op1 = pilha.pop()
-            temp = op1 + ' * ' + op2
-            if i + 1 < len(expressao) and expressao[i + 1] == '/':
-                temp = '(' + temp + ')'
-            pilha.push(temp)
-            print(f'LD {op1}')
-            print(f'ML {op2}')
-            print(f'ST {temp}')
-        elif char == '/':
-            op2 = pilha.pop()
-            op1 = pilha.pop()
-            if op1[0] != '(' and op1[-1] != ')' and len(op1) > 1:
-                op1 = '(' + op1 + ')'
-            if op2[0] != '(' and op2[-1] != ')' and len(op2) > 1:
-                op2 = '(' + op2 + ')'
-            temp = op1 + ' / ' + op2
-            if i + 1 < len(expressao) and expressao[i + 1] == '*':
-                temp = '(' + temp + ')'
-            pilha.push(temp)
-            print(f'LD {op1}')
-            print(f'DV {op2}')
-            print(f'ST {temp}')
-    print(f'Operação em notação infixa: {pilha.peek()}')
+            pilha.push('TEMP' + str(count))
+            print('LD ' + op1)
+            print(op + op2)
+            print('ST TEMP' + str(count))
