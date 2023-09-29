@@ -22,10 +22,14 @@ def reverseStack(stack):
         stack.push(queue.dequeue())
 
 
-def reverseQueueByK(queue, k):
-    if k <= 1:
-        return
-    pass
+def reverseElements(queue, k):
+    stack = Stack()
+    for _ in range(k):
+        stack.push(queue.dequeue())
+    for _ in range(k):
+        queue.enqueue(stack.pop())
+    for _ in range(queue.size - k):
+        queue.enqueue(queue.dequeue())
 
 
 class QueueWithTwoStacks():
@@ -42,7 +46,7 @@ class QueueWithTwoStacks():
                 raise IndexError('The stack is empty.')
             while not self.s1.isEmpty():
                 self.s2.push(self.s1.pop())
-            self.s2.pop()
+            return self.s2.pop()
         else:
             return self.s2.pop()
 
@@ -104,3 +108,31 @@ class DEQUE():
         self.rear.next = None
         self.size -= 1
         return data
+
+
+def reverseStackWithQueue(stack):
+    reverse = Queue()
+    element = stack.top
+    while element:
+        reverse.enqueue(element.data)
+        element = element.next
+    return reverse
+
+
+def isConsecutivePairs(stack):
+    result = True
+    queue = Queue()
+    reverseStack(stack)
+    while not stack.isEmpty():
+        queue.enqueue(stack.pop())
+        if stack.isEmpty():
+            if queue.size % 2:
+                break
+            else:
+                result = False
+        queue.enqueue(stack.pop())
+        if abs(queue.rear.data - queue.rear.previous.data) != 1:
+            result = False
+    while not queue.isEmpty():
+        stack.push(queue.dequeue())
+    return result
