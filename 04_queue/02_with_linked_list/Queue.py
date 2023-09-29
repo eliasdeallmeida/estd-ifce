@@ -39,12 +39,12 @@ class Queue():
         self.size += 1
     
     def dequeue(self):
-        if self.size > 0:
-            data = self.front.data
-            self.front = self.front.next
-            self.size -= 1
-            return data
-        raise IndexError('The queue is empty.')
+        if self.size == 0:
+            raise IndexError('The queue is empty.')
+        data = self.front.data
+        self.front = self.front.next
+        self.size -= 1
+        return data
     
     def isEmpty(self):
         return self.front == None

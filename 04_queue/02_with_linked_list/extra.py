@@ -26,3 +26,81 @@ def reverseQueueByK(queue, k):
     if k <= 1:
         return
     pass
+
+
+class QueueWithTwoStacks():
+    def __init__(self):
+        self.s1 = Stack()
+        self.s2 = Stack()
+    
+    def enqueue(self, data):
+        self.s1.push(data)
+    
+    def dequeue(self):
+        if self.s2.isEmpty():
+            if self.s1.isEmpty():
+                raise IndexError('The stack is empty.')
+            while not self.s1.isEmpty():
+                self.s2.push(self.s1.pop())
+            self.s2.pop()
+        else:
+            return self.s2.pop()
+
+
+class DEQUE():
+    def __init__(self):
+        self.front = None
+        self.rear = None
+        self.size = 0
+    
+    def __str__(self):
+        if self.size == 0:
+            return 'The queue is empty.'
+        result = ''
+        element = self.front
+        while element:
+            result += str(element.data)
+            if element.next:
+                result += ' -> '
+            element = element.next
+        return result
+    
+    def __len__(self):
+        return self.size
+
+    def addFront(self, data):
+        node = Node(data)
+        if self.size == 0:
+            self.rear = node
+        else:
+            self.front.previous = node
+            node.next = self.front
+        self.front = node
+        self.size += 1
+
+    def removeFront(self):
+        if self.size == 0:
+            raise IndexError('The queue is empty.')
+        data = self.front.data
+        self.front = self.front.next
+        self.size -= 1
+        return data
+
+    def addRear(self, data):
+        node = Node(data)
+        if self.size == 0:
+            self.front = node
+        else:
+            self.rear.next = node
+            node.previous = self.rear
+        self.rear = node
+        self.size += 1
+
+    def removeRear(self):
+        if self.size == 0:
+            raise IndexError('The queue is empty.')
+        data = self.rear.data
+        self.rear = self.rear.previous
+        self.rear.next = None
+        self.size -= 1
+        return data
