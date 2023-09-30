@@ -128,8 +128,7 @@ def isConsecutivePairs(stack):
         if stack.isEmpty():
             if queue.size % 2:
                 break
-            else:
-                result = False
+            result = False
         queue.enqueue(stack.pop())
         if abs(queue.rear.data - queue.rear.previous.data) != 1:
             result = False

@@ -34,7 +34,7 @@ class StackQ6():
         self.a[0] = 0
     
     def push(self, data):
-        if self.a[0] == self.n - 1:
+        if self.isFull():
             return
         self.a[0] += 1
         self.a[self.a[0]] = data
@@ -59,6 +59,9 @@ class StackQ6():
     def empty(self):
         self.a = [None] * self.n
         self.a[0] = 0
+    
+    def len(self):
+        return self.a[0]
 
 
 # Q7
@@ -73,41 +76,35 @@ class StackQ7():
         return str(self.a)
     
     def push(self, p, data):
+        if self.isFull() or data > 0:
+            return
         if p == 1:
-            if self.t1 + 1 == self.t2:
-                return
             self.t1 += 1
             self.a[self.t1] = data
         elif p == 2:
-            if self.t2 - 1 == self.t1:
-                return
             self.t2 -= 1
             self.a[self.t2] = data
     
     def pop(self, p):
+        if self.isEmpty(p):
+            return
         if p == 1:
-            if self.t1 == -1:
-                return
             data = self.a[self.t1]
             self.a[self.t1] = None
             self.t1 -= 1
             return data
         elif p == 2:
-            if self.t2 == self.n:
-                return
             data = self.a[self.t2]
             self.a[self.t2] = None
             self.t2 += 1
             return data
     
     def peek(self, p):
+        if self.isEmpty(p):
+            return
         if p == 1:
-            if self.t1 == -1:
-                return
             return self.a[self.t1]
         elif p == 2:
-            if self.t2 == self.n:
-                return
             return self.a[self.t2]
     
     def isEmpty(self, p):
