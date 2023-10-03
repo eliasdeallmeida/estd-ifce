@@ -96,24 +96,25 @@ class StackQ7():
         result = ''
         pointer = self.q1.front
         while pointer:
-            result += str(pointer.data) + '\n'
+            result += str(pointer.data) + ' <- '
             pointer = pointer.next
+        result += 'Topo'
         return result
     
-    def transfer(self, origin, destiny):
-        while not origin.isEmpty():
+    def transfer(self, origin, destiny, size):
+        while origin.size != size:
             destiny.enqueue(origin.dequeue())
     
     def push(self, data):
-        if self.q1.isEmpty():
-            self.q1.enqueue(data)
-        else:
-            self.transfer(self.q1, self.q2)
-            self.q1.enqueue(data)
-            self.transfer(self.q2, self.q1)
+        self.q1.enqueue(data)
 
     def pop(self):
-        return self.q1.dequeue()
+        if self.q1.isEmpty():
+            return
+        self.transfer(self.q1, self.q2, 1)
+        data = self.q1.dequeue()
+        self.transfer(self.q2, self.q1, 0)
+        return data
 
     def peek(self):
         return self.q1.getFront()
