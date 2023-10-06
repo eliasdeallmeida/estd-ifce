@@ -1,29 +1,39 @@
-from Queue import Queue
-from Stack import *
+import os
+import sys
 
 
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+
+from QueueWithLinkedList import *
+from stack.StackWithLinkedList import *
+
+
+# Slide 14
 def reverseQueue(queue):
     if queue.isEmpty():
         return
-    stack = Stack()
+    stack = StackWithLinkedList()
     while not queue.isEmpty():
         stack.push(queue.dequeue())
     while not stack.isEmpty():
         queue.enqueue(stack.pop())
 
 
+# Slide 14
 def reverseStack(stack):
     if stack.isEmpty():
         return
-    queue = Queue()
+    queue = QueueWithLinkedList()
     while not stack.isEmpty():
         queue.enqueue(stack.pop())
     while not queue.isEmpty():
         stack.push(queue.dequeue())
 
 
+# Slide 15
 def reverseElements(queue, k):
-    stack = Stack()
+    stack = StackWithLinkedList()
     for _ in range(k):
         stack.push(queue.dequeue())
     for _ in range(k):
@@ -32,10 +42,11 @@ def reverseElements(queue, k):
         queue.enqueue(queue.dequeue())
 
 
+# Slide 16
 class QueueWithTwoStacks():
     def __init__(self):
-        self.s1 = Stack()
-        self.s2 = Stack()
+        self.s1 = StackWithLinkedList()
+        self.s2 = StackWithLinkedList()
     
     def enqueue(self, data):
         self.s1.push(data)
@@ -51,11 +62,15 @@ class QueueWithTwoStacks():
             return self.s2.pop()
 
 
-class DEQUE():
+# Slide 17
+class Deque():
     def __init__(self):
         self.front = None
         self.rear = None
         self.size = 0
+    
+    def __len__(self):
+        return self.size
     
     def __str__(self):
         if self.size == 0:
@@ -68,9 +83,6 @@ class DEQUE():
                 result += ' -> '
             element = element.next
         return result
-    
-    def __len__(self):
-        return self.size
 
     def addFront(self, data):
         node = Node(data)
@@ -110,8 +122,9 @@ class DEQUE():
         return data
 
 
+# Slide 18-19
 def reverseStackWithQueue(stack):
-    reverse = Queue()
+    reverse = QueueWithLinkedList()
     element = stack.top
     while element:
         reverse.enqueue(element.data)
@@ -121,7 +134,7 @@ def reverseStackWithQueue(stack):
 
 def isConsecutivePairs(stack):
     result = True
-    queue = Queue()
+    queue = QueueWithLinkedList()
     reverseStack(stack)
     while not stack.isEmpty():
         queue.enqueue(stack.pop())
@@ -135,3 +148,8 @@ def isConsecutivePairs(stack):
     while not queue.isEmpty():
         stack.push(queue.dequeue())
     return result
+
+
+# Slide 20-21
+def reorderQueue(queue):
+    pass

@@ -1,4 +1,4 @@
-class Stack():
+class StackWithDynamicArray():
     def __init__(self, capacity = 1):
         self.top = 1
         self.capacity = capacity

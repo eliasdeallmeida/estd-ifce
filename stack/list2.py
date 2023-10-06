@@ -1,4 +1,15 @@
-from Stack import Stack
+from StackWithLinkedList import StackWithLinkedList
+
+
+# Q1
+# 3, 8, 2, 1, 6, 7, 4, 1
+
+
+# Q2
+# tam = 25 - (10 - 3)
+# tam = 25 - 7
+# tam = 18
+# Logo, no final das operações, a pilha terá 18 elementos
 
 
 # Q3
@@ -17,7 +28,7 @@ def empty(stack):
 
 # Q5
 def reverseArray(array):
-    stack = Stack()
+    stack = StackWithLinkedList()
     reverse = []
     for element in array:
         stack.push(element)
@@ -134,25 +145,25 @@ class StackQ7():
 
 
 # Q8
-def avaliarExpressao(expressao):
-    pilha = Stack()
+def evaluateExpression(expression):
+    stack = StackWithLinkedList()
     count = 0
-    for char in expressao:
+    for char in expression:
         if char.isalpha():
-            pilha.push(char)
+            stack.push(char)
         else:
             if char == '+':
-                op = 'AD '
+                operation = 'AD '
             elif char == '-':
-                op = 'SB '
+                operation = 'SB '
             elif char == '*':
-                op = 'ML '
+                operation = 'ML '
             elif char == '/':
-                op = 'DV '
+                operation = 'DV '
             count += 1
-            op2 = pilha.pop()
-            op1 = pilha.pop()
-            pilha.push('TEMP' + str(count))
-            print('LD ' + op1)
-            print(op + op2)
+            n2 = stack.pop()
+            n1 = stack.pop()
+            stack.push('TEMP' + str(count))
+            print('LD ' + n1)
+            print(operation + n2)
             print('ST TEMP' + str(count))

@@ -1,8 +1,9 @@
-from Stack import Stack
+from StackWithLinkedList import StackWithLinkedList
 
 
+# Slide 12-13
 def isMathExpressionValid(expression):
-    stack = Stack()
+    stack = StackWithLinkedList()
     brackets = {')': '(', ']': '[', '}': '{'}
     for char in expression:
         if char in brackets.values():
@@ -13,8 +14,9 @@ def isMathExpressionValid(expression):
     return stack.isEmpty()
 
 
+# Slide 14
 def isHtmlValid(html):
-    stack = Stack()
+    stack = StackWithLinkedList()
     begin = end = 0
     validTags = {'body', 'h1', 'center', 'p', 'ol', 'li'}
     if not html.startswith('<') or not html.endswith('>'):
@@ -34,29 +36,14 @@ def isHtmlValid(html):
     return stack.isEmpty()
 
 
-def isPalindrome(string):
-    stack = Stack()
-    half = len(string) // 2
-    for i in range(len(string)):
-        if i < half:
-            stack.push(string[i])
-        elif len(string) % 2 and i == half:
-            continue
-        elif stack.pop() != string[i]:
-            return False
-    return stack.isEmpty()
-
-
+# Slide 15-19
 def infixToPostfix(infix):
-    postfix = ''
-    stack = Stack()
-    for char in infix:
-        pass
-    return postfix
+    pass
 
 
+# Slide 20-21
 def calculatePostfix(postfix):
-    stack = Stack()
+    stack = StackWithLinkedList()
     for char in postfix:
         if char == '+':
             stack.push(stack.pop() + stack.pop())
@@ -71,3 +58,27 @@ def calculatePostfix(postfix):
         else:
             stack.push(int(char))
     return stack.peek()
+
+
+# Slide 22
+def calculateInfix(infix):
+    pass
+
+
+# Slide 23-24
+def isPalindrome(string):
+    stack = StackWithLinkedList()
+    half = len(string) // 2
+    for i in range(len(string)):
+        if i < half:
+            stack.push(string[i])
+        elif len(string) % 2 and i == half:
+            continue
+        elif stack.pop() != string[i]:
+            return False
+    return stack.isEmpty()
+
+
+# Slide 25
+def postfixToInfix(postfix):
+    pass
