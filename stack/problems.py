@@ -38,31 +38,65 @@ def isHtmlValid(html):
 
 # Slide 15-19
 def infixToPostfix(infix):
-    pass
+    postfix = ''
+    priority = {'(': 0, '+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+    operators = StackWithLinkedList()
+    for char in infix:
+        if char.isalpha():
+            postfix += char
+        elif char == '(':
+            operators.push(char)
+        elif char == ')':
+            while operators.peek() != '(':
+                postfix += operators.pop()
+            operators.pop()
+        elif char in '+-*/^':
+            while not operators.isEmpty() and priority[operators.peek()] >= priority[char]:
+                postfix += operators.pop()
+            operators.push(char)
+    while not operators.isEmpty():
+        postfix += operators.pop()
+    return postfix
 
 
 # Slide 20-21
-def calculatePostfix(postfix):
+def evaluatePostfix(postfix):
+    operands = StackWithLinkedList()
+    for char in postfix:
+        if char in '+-*/':
+            n2 = operands.pop()
+            n1 = operands.pop()
+            if char == '+':
+                operands.push(n1 + n2)
+            elif char == '-':
+                operands.push(n1 - n2)
+            elif char == '*':
+                operands.push(n1 * n2)
+            elif char == '/':
+                operands.push(n1 / n2)
+        else:
+            operands.push(int(char))
+    return operands.pop()
+
+
+# Slide 22
+def evaluateInfix(infix):
+    postfix = ''
     stack = StackWithLinkedList()
+    for char in infix:
+        postfix = char + postfix
     for char in postfix:
         if char == '+':
             stack.push(stack.pop() + stack.pop())
         elif char == '-':
-            n1 = stack.pop()
-            n2 = stack.pop()
-            stack.push(n2 - n1)
+            stack.push(stack.pop() - stack.pop())
         elif char == '*':
             stack.push(stack.pop() * stack.pop())
         elif char == '/':
             stack.push(stack.pop() / stack.pop())
         else:
             stack.push(int(char))
-    return stack.peek()
-
-
-# Slide 22
-def calculateInfix(infix):
-    pass
+    return stack.pop()
 
 
 # Slide 23-24
@@ -81,4 +115,20 @@ def isPalindrome(string):
 
 # Slide 25
 def postfixToInfix(postfix):
-    pass
+    infix = ''
+    operands = StackWithLinkedList()
+    for char in postfix:
+        if char.isalpha():
+            operands.push(char)
+        elif char in '+-*/':
+            n2 = operands.pop()
+            n1 = operands.pop()
+            if char == '+':
+                operands.push('(' + n1 + ' + ' + n2 + ')')
+            elif char == '-':
+                operands.push('(' + n1 + ' - ' + n2 + ')')
+            elif char == '*':
+                operands.push('(' + n1 + ' * ' + n2 + ')')
+            elif char == '/':
+                operands.push('(' + n1 + ' / ' + n2 + ')')
+    return operands.pop()

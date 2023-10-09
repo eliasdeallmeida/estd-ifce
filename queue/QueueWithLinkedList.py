@@ -19,15 +19,15 @@ class QueueWithLinkedList():
     
     def __str__(self):
         if self.isEmpty():
-            return
-        result = ''
+            return 'The queue is empty.'
+        result = '[FRONT] '
         node = self.front
         while node:
             result += str(node.data)
             if node.next:
-                result += ' -> '
+                result += ', '
             node = node.next
-        return result
+        return result + ' [REAR]'
     
     def enqueue(self, data):
         if self.isEmpty():
@@ -41,8 +41,10 @@ class QueueWithLinkedList():
             raise IndexError('The queue is empty.')
         deletedData = self.front.data
         self.front = self.front.next
-        self.size = self.size - 1
+        self.size -= 1
+        if len(self) == 0:
+            self.rear = None
         return deletedData
-    
+
     def isEmpty(self):
         return self.front == self.rear == None and len(self) == 0

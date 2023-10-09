@@ -17,13 +17,15 @@ class StackWithLinkedList():
     
     def __str__(self):
         if self.isEmpty():
-            return
-        result = '-' * 10 + '\n'
+            return 'The stack is empty.'
+        result = '[TOP] '
         node = self.top
         while node:
-            result += str(node.data) + '\n'
+            result += str(node.data)
             node = node.next
-        return result + '-' * 10
+            if node:
+                result += ', '
+        return result
     
     def push(self, data):
         self.top = Node(data, self.top)

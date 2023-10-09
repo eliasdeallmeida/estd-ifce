@@ -10,9 +10,44 @@ from stack.StackWithLinkedList import *
 
 
 # Q1
-# a) 5, 3, 2, 8
-# b) 7, 3, 5, 9, 19
-# c) 71, 31, 9, 11, 1
+# a)
+#    fila: 5        |
+#    fila: 5, 3     |
+#    fila: 3		|   retorna 5
+#    fila: 3, 2     |
+#    fila: 3, 2, 8  |
+#    fila: 2, 8		|   retorna 3
+#    fila: 8 		|   retorna 2
+#    fila: 8, 9     |
+#    fila: 8, 9, 1  |
+#    fila: 9, 1		|   retorna 8
+#    fila: 9, 1, 7  |
+
+# b)
+#    fila: 7        |
+#    fila: 7, 3     |
+#    fila: 3		|   retorna 7
+#    fila: 3, 5     |
+#    fila: 3, 5, 9  |
+#    fila: 5, 9		|   retorna 3
+#    fila: 9		|   retorna 5
+#    fila: 9, 19    |
+#    fila: 9, 19, 1 |
+#    fila: 19, 1	|	retorna 9
+#    fila: 1		|   retorna 19
+
+# c)
+#    fila: 71       |
+#    fila: 71, 31   |
+#    fila: 31		|   retorna 71
+#    fila: 			|   retorna 31
+#    fila: 9        |
+#    fila: 9, 11    |
+#    fila: 11		|   retorna 9
+#    fila: 			|   retorna 11
+#    fila: 1        |
+#    fila: 1, 20    |
+#    fila: 20		|   retorna 1
 
 
 # Q2
@@ -23,9 +58,49 @@ from stack.StackWithLinkedList import *
 
 
 # Q3
-# a) 9, 5, 9, 4, 10, 4
-# b) 5, 4, 5, 10, 9, 6
-# c) 5, 5, 4, 9, 10, 6
+# a)
+#    deque: 4               |
+#    deque: 4, 8            |
+#    deque: 4, 8, 9         |
+#    deque: 5, 4, 8, 9      |
+#    deque: 5, 4, 8, 9	    |	retorna 9
+#    deque: 4, 8, 9		    |   retorna 5
+#    deque: 4, 8		    |	retorna 9
+#    deque: 4, 8, 10        |
+#    deque: 4, 8, 10	    |	retorna 4
+#    deque: 4, 8, 10	    |	retorna 10
+#    deque: 4, 8, 10, 6	    |	retorna 6
+#    deque: 8, 10, 6	    |	retorna 4
+
+# b)
+#    deque: 4               |
+#    deque: 4, 8            |
+#    deque: 4, 8, 9         |
+#    deque: 4, 8, 9, 5      |
+#    deque: 4, 8, 9, 5		|	retorna 5
+#    deque: 8, 9, 5			|   retorna 4
+#    deque: 8, 9			|	retorna 5
+#    deque: 10, 8, 9        |
+#    deque: 10, 8, 9		|	retorna 10
+#    deque: 10, 8, 9		|	retorna 9
+#    deque: 6, 10, 8, 9	    |
+#    deque: 6, 10, 8, 9, 10 |
+#    deque: 10, 8, 9, 10	|   retorna 6
+
+# c)
+#    deque: 4               |
+#    deque: 8, 4            |
+#    deque: 9, 8, 4         |
+#    deque: 9, 8, 4, 5      |
+#    deque: 9, 8, 4, 5		|	retorna 5
+#    deque: 9, 8, 4			|   retorna 5
+#    deque: 9, 8			|	retorna 4
+#    deque: 9, 8, 10        |
+#    deque: 9, 8, 10		|	retorna 9
+#    deque: 9, 8, 10		|	retorna 10
+#    deque: 6, 9, 8, 10     |
+#    deque: 6, 9, 8, 10, 10 |
+#    deque: 9, 8, 10, 10	|	retorna 6
 
 
 # Q4
@@ -143,15 +218,16 @@ class StackQ7():
         self.q = QueueWithLinkedList()
     
     def __str__(self):
+        if self.isEmpty():
+            return 'The stack is empty.'
         result = ''
-        for _ in range(self.q.size - 1):
-            self.q.enqueue(self.q.dequeue())
         node = self.q.front
         while node:
-            result += str(node.data) + '\n'
-            node = node.previous
-        self.q.enqueue(self.q.dequeue())
-        return result
+            result += str(node.data)
+            node = node.next
+            if node:
+                result += ', '
+        return result + ' [TOP]'
     
     def push(self, data):
         self.q.enqueue(data)
@@ -159,12 +235,8 @@ class StackQ7():
     def pop(self):
         if self.q.isEmpty():
             return
-        if self.q.size > 1:
-            for _ in range(self.q.size - 1):
-                self.q.enqueue(self.q.dequeue())
-            self.q.front.next.previous = None
-        else:
-            self.q.rear = None
+        for _ in range(self.q.size - 1):
+            self.q.enqueue(self.q.dequeue())
         return self.q.dequeue()
 
     def peek(self):

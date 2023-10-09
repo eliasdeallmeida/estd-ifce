@@ -14,7 +14,7 @@ from StackWithLinkedList import StackWithLinkedList
 
 # Q3
 def transfer(s, t):
-    while s.top != None:
+    while not s.isEmpty():
         t.push(s.pop())
 
 
@@ -26,7 +26,7 @@ def empty(stack):
     empty(stack)
 
 
-# Q5
+# Q5 V1 (Com retorno)
 def reverseArray(array):
     stack = StackWithLinkedList()
     reverse = []
@@ -35,6 +35,16 @@ def reverseArray(array):
     for _ in range(len(array)):
         reverse.append(stack.pop())
     return reverse
+
+
+# Q5 V2 (Sem retorno)
+def reverseArray(array):
+    stack = StackWithLinkedList()
+    for element in array:
+        stack.push(element)
+    for i in range(len(array)):
+        array.insert(i, stack.pop())
+        array.pop()
 
 
 # Q6
@@ -129,12 +139,10 @@ class StackQ7():
     
     def empty(self, p):
         if p == 1:
-            for i in range(self.t1, -1, -1):
-                self.a[i] = None
+            self.a[:self.t1 + 1] = [None] * (self.t1 + 1)
             self.t1 = -1
         elif p == 2:
-            for i in range(self.t2, self.n):
-                self.a[i] = None
+            self.a[self.t2:] = [None] * (self.n - self.t2)
             self.t2 = self.n
     
     def len(self, p):

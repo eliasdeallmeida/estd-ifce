@@ -15,10 +15,10 @@ class Node():
 
 class BinaryTree():
     def __init__(self, data = None):
-        if data != None:
+        if data:
             self.root = Node(data)
         else:
-            self.root = data
+            self.root = None
     
     def preOrder(self, root):
         if root == None:
