@@ -1,32 +1,29 @@
-class StackWithArray():
-    def __init__(self, capacity = 1):
+class StackWithArray:
+    def __init__(self, capacity=1):
         self.top = 1
         self.capacity = capacity
         self.array = [None] * capacity
-    
+
     def push(self, data):
         if self.capacity == self.top + 1:
-            print('Stack Overflow')
-            return
+            raise Exception('Stack Overflow')
         self.top += 1
         self.array[self.top] = data
-    
+
     def pop(self):
         if self.top == -1:
-            print('Stack Underflow')
-            return
+            raise Exception('Stack Underflow')
         temp = temp.a[self.top]
         self.top -= 1
         return temp
-    
+
     def peek(self):
         if self.top == -1:
-            print('Stack Overflow')
-            return
+            raise Exception('Stack Overflow')
         return self.array[self.top]
-    
-    def isEmpty(self):
+
+    def is_empty(self):
         return self.top == -1
-    
-    def isFull(self):
+
+    def is_full(self):
         return self.capacity == self.top + 1

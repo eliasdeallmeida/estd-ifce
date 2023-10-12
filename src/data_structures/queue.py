@@ -1,11 +1,11 @@
-class Node():
-    def __init__(self, data, previous = None, next = None):
+class Node:
+    def __init__(self, data, previous=None, next=None):
         self.data = data
         self.previous = previous
         self.next = next
 
 
-class QueueWithLinkedList():
+class Queue:
     def __init__(self, *data):
         self.front = None
         self.rear = None
@@ -13,38 +13,48 @@ class QueueWithLinkedList():
         if data:
             for element in data:
                 self.enqueue(element)
-    
+
     def __len__(self):
         return self.size
-    
+
     def __str__(self):
-        if self.isEmpty():
+        if self.is_empty():
             return 'The queue is empty.'
-        result = '[FRONT] '
+        output = 'FRONT ['
         node = self.front
         while node:
-            result += str(node.data)
+            output += str(node.data)
             if node.next:
-                result += ', '
+                output += ', '
             node = node.next
-        return result + ' [REAR]'
-    
+        return output + '] REAR'
+
     def enqueue(self, data):
-        if self.isEmpty():
+        if self.is_empty():
             self.front = self.rear = Node(data)
         else:
-            self.rear.next = self.rear = Node(data, self.rear, None)
+            self.rear.next = self.rear = Node(data, previous=self.rear)
         self.size += 1
-    
+
     def dequeue(self):
-        if self.isEmpty():
+        if self.is_empty():
             raise IndexError('The queue is empty.')
-        deletedData = self.front.data
+        deleted_data = self.front.data
         self.front = self.front.next
         self.size -= 1
-        if len(self) == 0:
+        if self.size == 0:
             self.rear = None
-        return deletedData
+        return deleted_data
 
-    def isEmpty(self):
-        return self.front == self.rear == None and len(self) == 0
+    def get_front(self):
+        if self.is_empty():
+            return None
+        return self.front.data
+
+    def get_rear(self):
+        if self.is_empty():
+            return None
+        return self.rear.data
+
+    def is_empty(self):
+        return self.front is None and self.rear is None

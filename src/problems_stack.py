@@ -1,9 +1,9 @@
-from StackWithLinkedList import StackWithLinkedList
+from data_structures.stack import Stack
 
 
 # Slide 12-13
-def isMathExpressionValid(expression):
-    stack = StackWithLinkedList()
+def is_math_expression_valid(expression):
+    stack = Stack()
     brackets = {')': '(', ']': '[', '}': '{'}
     for char in expression:
         if char in brackets.values():
@@ -11,36 +11,36 @@ def isMathExpressionValid(expression):
         elif char in brackets.keys():
             if stack.isEmpty() or stack.pop() != brackets[char]:
                 return False
-    return stack.isEmpty()
+    return stack.is_empty()
 
 
 # Slide 14
-def isHtmlValid(html):
-    stack = StackWithLinkedList()
+def is_html_valid(html):
+    stack = Stack()
     begin = end = 0
-    validTags = {'body', 'h1', 'center', 'p', 'ol', 'li'}
+    valid_tags = {'body', 'h1', 'center', 'p', 'ol', 'li'}
     if not html.startswith('<') or not html.endswith('>'):
         return False
     while True:
         begin = html.find('<', end)
-        end = html.find('>', begin + 1)        
+        end = html.find('>', begin + 1)
         if begin == -1 or end == -1:
             break
-        tag = html[begin : end + 1]
+        tag = html[begin: end + 1]
         if tag[1] != '/':
-            if tag[1:-1] not in validTags:
+            if tag[1:-1] not in valid_tags:
                 return False
             stack.push(tag)
-        elif stack.isEmpty() or stack.pop() != tag.replace('/',''):
+        elif stack.is_empty() or stack.pop() != tag.replace('/', ''):
             return False
-    return stack.isEmpty()
+    return stack.is_empty()
 
 
 # Slide 15-19
-def infixToPostfix(infix):
+def infix_to_postfix(infix):
     postfix = ''
     priority = {'(': 0, '+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
-    operators = StackWithLinkedList()
+    operators = Stack()
     for char in infix:
         if char.isalpha():
             postfix += char
@@ -51,17 +51,17 @@ def infixToPostfix(infix):
                 postfix += operators.pop()
             operators.pop()
         elif char in '+-*/^':
-            while not operators.isEmpty() and priority[operators.peek()] >= priority[char]:
+            while not operators.is_empty() and priority[operators.peek()] >= priority[char]:
                 postfix += operators.pop()
             operators.push(char)
-    while not operators.isEmpty():
+    while not operators.is_empty():
         postfix += operators.pop()
     return postfix
 
 
 # Slide 20-21
-def evaluatePostfix(postfix):
-    operands = StackWithLinkedList()
+def evaluate_postfix(postfix):
+    operands = Stack()
     for char in postfix:
         if char in '+-*/':
             n2 = operands.pop()
@@ -80,9 +80,9 @@ def evaluatePostfix(postfix):
 
 
 # Slide 22
-def evaluateInfix(infix):
+def evaluate_infix(infix):
     postfix = ''
-    stack = StackWithLinkedList()
+    stack = Stack()
     for char in infix:
         postfix = char + postfix
     for char in postfix:
@@ -100,8 +100,8 @@ def evaluateInfix(infix):
 
 
 # Slide 23-24
-def isPalindrome(string):
-    stack = StackWithLinkedList()
+def is_palindrome(string):
+    stack = Stack()
     half = len(string) // 2
     for i in range(len(string)):
         if i < half:
@@ -110,13 +110,12 @@ def isPalindrome(string):
             continue
         elif stack.pop() != string[i]:
             return False
-    return stack.isEmpty()
+    return stack.is_empty()
 
 
 # Slide 25
-def postfixToInfix(postfix):
-    infix = ''
-    operands = StackWithLinkedList()
+def postfix_to_infix(postfix):
+    operands = Stack()
     for char in postfix:
         if char.isalpha():
             operands.push(char)

@@ -1,4 +1,4 @@
-from StackWithLinkedList import StackWithLinkedList
+from data_structures.stack import Stack
 
 
 # Q1
@@ -14,21 +14,21 @@ from StackWithLinkedList import StackWithLinkedList
 
 # Q3
 def transfer(s, t):
-    while not s.isEmpty():
+    while not s.is_empty():
         t.push(s.pop())
 
 
 # Q4
 def empty(stack):
-    if stack.isEmpty():
+    if stack.is_empty():
         return
     stack.pop()
     empty(stack)
 
 
 # Q5 V1 (Com retorno)
-def reverseArray(array):
-    stack = StackWithLinkedList()
+def reverse_array(array):
+    stack = Stack()
     reverse = []
     for element in array:
         stack.push(element)
@@ -38,8 +38,8 @@ def reverseArray(array):
 
 
 # Q5 V2 (Sem retorno)
-def reverseArray(array):
-    stack = StackWithLinkedList()
+def reverse_array(array):
+    stack = Stack()
     for element in array:
         stack.push(element)
     for i in range(len(array)):
@@ -53,15 +53,15 @@ class StackQ6():
         self.n = n
         self.a = [None] * n
         self.a[0] = 0
-    
+
     def push(self, data):
-        if self.isFull():
+        if self.is_full():
             return
         self.a[0] += 1
         self.a[self.a[0]] = data
 
     def pop(self):
-        if self.isEmpty():
+        if self.is_empty():
             return
         data = self.a[self.a[0]]
         self.a[self.a[0]] = None
@@ -71,16 +71,16 @@ class StackQ6():
     def peek(self):
         return self.a[self.a[0]]
 
-    def isEmpty(self):
+    def is_empty(self):
         return self.a[0] == 0
-    
-    def isFull(self):
+
+    def is_full(self):
         return self.a[0] == self.n - 1
-    
+
     def empty(self):
         self.a = [None] * self.n
         self.a[0] = 0
-    
+
     def len(self):
         return self.a[0]
 
@@ -92,12 +92,12 @@ class StackQ7():
         self.t2 = n
         self.a = [None] * n
         self.n = n
-    
+
     def __str__(self):
         return str(self.a)
-    
+
     def push(self, p, data):
-        if self.isFull() or data > 0:
+        if self.is_full() or data > 0:
             return
         if p == 1:
             self.t1 += 1
@@ -105,9 +105,9 @@ class StackQ7():
         elif p == 2:
             self.t2 -= 1
             self.a[self.t2] = data
-    
+
     def pop(self, p):
-        if self.isEmpty(p):
+        if self.is_empty(p):
             return
         if p == 1:
             data = self.a[self.t1]
@@ -119,24 +119,24 @@ class StackQ7():
             self.a[self.t2] = None
             self.t2 += 1
             return data
-    
+
     def peek(self, p):
-        if self.isEmpty(p):
+        if self.is_empty(p):
             return
         if p == 1:
             return self.a[self.t1]
         elif p == 2:
             return self.a[self.t2]
-    
-    def isEmpty(self, p):
+
+    def is_empty(self, p):
         if p == 1:
             return self.t1 == -1
         elif p == 2:
             return self.t2 == self.n
-    
-    def isFull(self):
+
+    def is_full(self):
         return self.t1 + 1 == self.t2
-    
+
     def empty(self, p):
         if p == 1:
             self.a[:self.t1 + 1] = [None] * (self.t1 + 1)
@@ -144,7 +144,7 @@ class StackQ7():
         elif p == 2:
             self.a[self.t2:] = [None] * (self.n - self.t2)
             self.t2 = self.n
-    
+
     def len(self, p):
         if p == 1:
             return self.t1 + 1
@@ -153,8 +153,8 @@ class StackQ7():
 
 
 # Q8
-def evaluateExpression(expression):
-    stack = StackWithLinkedList()
+def evaluate_expression(expression):
+    stack = Stack()
     count = 0
     for char in expression:
         if char.isalpha():

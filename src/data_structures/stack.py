@@ -1,48 +1,48 @@
-class Node():
-    def __init__(self, data, next = None):
+class Node:
+    def __init__(self, data, next=None):
         self.data = data
         self.next = next
 
 
-class StackWithLinkedList():
+class Stack:
     def __init__(self, *data):
         self.top = None
         self.size = 0
         if data:
             for element in data:
                 self.push(element)
-    
+
     def __len__(self):
         return self.size
-    
+
     def __str__(self):
-        if self.isEmpty():
+        if self.is_empty():
             return 'The stack is empty.'
-        result = '[TOP] '
+        output = 'TOP ['
         node = self.top
         while node:
-            result += str(node.data)
+            output += str(node.data)
             node = node.next
             if node:
-                result += ', '
-        return result
-    
+                output += ', '
+        return output + ']'
+
     def push(self, data):
-        self.top = Node(data, self.top)
+        self.top = Node(data, next=self.top)
         self.size += 1
-    
+
     def pop(self):
-        if self.isEmpty():
+        if self.is_empty():
             raise IndexError('The stack is empty.')
-        deletedData = self.top.data
+        deleted_data = self.top.data
         self.top = self.top.next
         self.size -= 1
-        return deletedData
-    
+        return deleted_data
+
     def peek(self):
-        if self.isEmpty():
-            raise IndexError('The stack is empty.')
+        if self.is_empty():
+            return None
         return self.top.data
-    
-    def isEmpty(self):
-        return self.top == None and len(self) == 0
+
+    def is_empty(self):
+        return self.top is None
