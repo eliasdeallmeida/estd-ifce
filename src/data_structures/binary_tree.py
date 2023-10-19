@@ -40,3 +40,18 @@ class BinaryTree:
         self.post_order(root.left)
         self.post_order(root.right)
         print(root.data, end=' -> ')
+
+    def print(self, root, depth=0, is_left=None):
+        if root is None:
+            return None
+        if depth == 0:
+            print(f'{root.data}')
+        else:
+            if is_left:
+                prefix = '└─L─'
+            else:
+                prefix = '└─R─'
+            print('    ' * (depth - 1) + prefix + str(root.data))
+        if root.left or root.right:
+            self.print(root.left, depth + 1, is_left=True)
+            self.print(root.right, depth + 1, is_left=False)

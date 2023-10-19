@@ -1,10 +1,12 @@
 from data_structures.stack import Stack
 from data_structures.queue import Queue
+from data_structures.binary_tree import BinaryTree
+from exercise_list_4 import depth, count_nodes
 
 
-# Questões que podem estar na prova 03 (Pilhas e Filas)
+# Questões que podem estar na prova 02 (Pilhas e Filas)
 
-# 1) Dado uma pilha P e um valor K, identifique se K está contido na pilha usando uma fila F.
+# 1) Identifique se um valor k está contido em uma pilha usando uma fila.
 def is_contained(stack, k):
     queue = Queue()
     while not stack.is_empty():
@@ -15,7 +17,7 @@ def is_contained(stack, k):
 
 
 stack = Stack(1, 2, 3, 4, 5)
-print(is_contained(stack, 55))
+# print(is_contained(stack, 55))
 
 
 # 2) Retorne todos os anagramas de uma palavra usando uma pilha.
@@ -36,7 +38,7 @@ def anagrams(word):
     return permutations
 
 
-print(anagrams('ABC'))
+# print(anagrams('ABC'))
 
 
 # 3) Retorne todos os subconjuntos de uma palavra usando uma pilha e uma fila.
@@ -63,4 +65,44 @@ def subsets(word):
     return permutations
 
 
-print(subsets('ABC'))
+# print(subsets('ABC'))
+
+
+bt = BinaryTree(1)
+bt.root.set_left(12)
+bt.root.set_right(8)
+bt.root.left.set_left(5)
+bt.root.left.set_right(2)
+bt.root.right.set_right(123)
+
+
+# Verificar se uma árvore binária é balanceada
+def is_balanced(root):
+    if root is None:
+        return True
+    left_height = depth(root.left)
+    right_height = depth(root.right)
+    is_left_balanced = is_balanced(root.left)
+    is_right_balanced = is_balanced(root.right)
+    if abs(left_height - right_height) <= 1 and is_left_balanced and is_right_balanced:
+        return True
+    return False
+
+
+# print(is_balanced(bt.root))
+
+
+# Verificar se uma árvore binária é perfeitamente balanceada
+def is_perfectly_balanced(root):
+    if root is None:
+        return True
+    nodes_left = count_nodes(root.left)
+    nodes_right = count_nodes(root.right)
+    is_left_perfectly_balanced = is_perfectly_balanced(root.left)
+    is_right_perfecly_balanced = is_perfectly_balanced(root.right)
+    if abs(nodes_left - nodes_right) <= 1 and is_left_perfectly_balanced and is_right_perfecly_balanced:
+        return True
+    return False
+
+
+# print(is_perfectly_balanced(bt.root))
