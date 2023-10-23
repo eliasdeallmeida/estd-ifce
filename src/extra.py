@@ -68,12 +68,17 @@ def subsets(word):
 # print(subsets('ABC'))
 
 
-bt = BinaryTree(1)
-bt.root.set_left(12)
-bt.root.set_right(8)
-bt.root.left.set_left(5)
-bt.root.left.set_right(2)
-bt.root.right.set_right(123)
+bt = BinaryTree('A')
+bt.root.set_left('B')
+bt.root.set_right('C')
+bt.root.left.set_left('D')
+bt.root.left.set_right('E')
+bt.root.right.set_left('F')
+# bt.root.set_left(12)
+# bt.root.set_right(8)
+# bt.root.left.set_left(5)
+# bt.root.left.set_right(2)
+# bt.root.right.set_right(123)
 
 
 # Verificar se uma árvore binária é balanceada
@@ -106,3 +111,30 @@ def is_perfectly_balanced(root):
 
 
 # print(is_perfectly_balanced(bt.root))
+
+
+def display_by_level(root):
+    if root is None:
+        return None
+    queue = Queue(root)
+    while not queue.is_empty():
+        node = queue.dequeue()
+        print(node.data, end=' ')
+        if node.left:
+            queue.enqueue(node.left)
+        if node.right:
+            queue.enqueue(node.right)
+
+
+# display_by_level(bt.root)
+
+
+def count_n(root, n):
+    if root is None:
+        return 0
+    if root.data != n:
+        return count_n(root.left, n) + count_n(root.right, n)
+    return 1 + count_n(root.left, n) + count_n(root.right, n)
+
+
+# print(count_n(bt.root, 5))

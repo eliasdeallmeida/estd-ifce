@@ -1,17 +1,6 @@
 from data_structures.stack import Stack
 
 
-# Q1
-# 3, 8, 2, 1, 6, 7, 4, 1
-
-
-# Q2
-# tam = 25 - (10 - 3)
-# tam = 25 - 7
-# tam = 18
-# Logo, no final das operações, a pilha terá 18 elementos
-
-
 # Q3
 def transfer(s, t):
     while not s.is_empty():

@@ -22,36 +22,34 @@ class BinaryTree:
 
     def pre_order(self, root):
         if root is None:
-            return
+            return None
         print(root.data, end=' -> ')
         self.pre_order(root.left)
         self.pre_order(root.right)
 
     def in_order(self, root):
         if root is None:
-            return
+            return None
         self.in_order(root.left)
         print(root.data, end=' -> ')
         self.in_order(root.right)
 
     def post_order(self, root):
         if root is None:
-            return
+            return None
         self.post_order(root.left)
         self.post_order(root.right)
         print(root.data, end=' -> ')
 
-    def print(self, root, depth=0, is_left=None):
+    def display(self, root, depth=0, is_left=None):
         if root is None:
             return None
         if depth == 0:
             print(f'{root.data}')
         else:
-            if is_left:
-                prefix = '└─L─'
-            else:
-                prefix = '└─R─'
+            prefix = '└─L─' if is_left else '└─R─'
             print('    ' * (depth - 1) + prefix + str(root.data))
-        if root.left or root.right:
-            self.print(root.left, depth + 1, is_left=True)
-            self.print(root.right, depth + 1, is_left=False)
+        if root.left:
+            self.display(root.left, depth + 1, is_left=True)
+        if root.right:
+            self.display(root.right, depth + 1, is_left=False)
